@@ -1,0 +1,12 @@
+{application, two_rooms,
+ [
+  {description, ""},
+  {vsn, "1"},
+  {registered, []},
+  {applications, [
+                  kernel,
+                  stdlib
+                 ]},
+  {mod, { two_rooms_app, []}},
+  {env, []}
+ ]}.
