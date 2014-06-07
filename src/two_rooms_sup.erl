@@ -33,11 +33,11 @@ init([]) ->
         permanent, 1000, worker, []
       },
       {client_1,
-        {two_rooms_client, start_link, [client1]},
+        {two_rooms_client, start_link, [client1, [acceptor1]]},
         permanent, 1000, worker, []
       },
       {client_2,
-        {two_rooms_client, start_link, [client2]},
+        {two_rooms_client, start_link, [client2, [acceptor2]]},
         permanent, 1000, worker, []
       },
       {server,
