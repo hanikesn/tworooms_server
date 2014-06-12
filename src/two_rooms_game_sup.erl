@@ -1,4 +1,4 @@
--module(two_rooms_sup).
+-module(two_rooms_game_sup).
 
 -behaviour(supervisor).
 
@@ -16,25 +16,25 @@
 %% ===================================================================
 
 start_link() ->
-    supervisor:start_link({local, ?MODULE}, ?MODULE, []).
+  supervisor:start_link({local, ?MODULE}, ?MODULE, []).
 
 %% ===================================================================
 %% Supervisor callbacks
 %% ===================================================================
 
 init([]) ->
-    {ok, { {one_for_one, 5, 10}, [
-      {acceptor_1,
-        {two_rooms_acceptor, start_link, [acceptor1, [3000, client1]]},
-        permanent, 1000, worker, []
-      },
-      {acceptor_2,
-        {two_rooms_acceptor, start_link, [acceptor2,[3001, client2]]},
-        permanent, 1000, worker, []
-      },
-      {game,
-        {two_rooms_game_sup, start_link, []},
-        permanent, 1000, supervisor, []
-      }
-    ]} }.
+  {ok, { {one_for_all, 5, 10}, [
+    {client_1,
+      {two_rooms_client, start_link, [client1, [acceptor1]]},
+      permanent, 1000, worker, []
+    },
+    {client_2,
+      {two_rooms_client, start_link, [client2, [acceptor2]]},
+      permanent, 1000, worker, []
+    },
+    {server,
+      {two_rooms_server, start_link, []},
+      permanent, 1000, worker, []
+    }
+  ]} }.
 
